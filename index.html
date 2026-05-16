@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazônia Games · Lendas do Folclore</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --verde-escuro:#0a1f1c;
+  --verde-medio:#0f3d34;
+  --verde-claro:#22c55e;
+  --dourado:#facc15;
+  --texto:#f0fdf4;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:
+    radial-gradient(ellipse at top, #134e3a 0%, #0a1f1c 50%),
+    linear-gradient(180deg,#0a1f1c,#020617);
+  color:var(--texto);
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* PARTÍCULAS FOLHAS */
+.particles{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  overflow:hidden;
+}
+
+.leaf{
+  position:absolute;
+  font-size:20px;
+  opacity:0.3;
+  animation:fall linear infinite;
+}
+
+@keyframes fall{
+  0%{ transform:translateY(-50px) rotate(0deg); opacity:0; }
+  10%{ opacity:0.5; }
+  100%{ transform:translateY(110vh) rotate(720deg); opacity:0; }
+}
+
+/* HEADER */
+header{
+  position:relative;
+  z-index:10;
+  padding:30px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:linear-gradient(180deg,rgba(20,83,45,0.6),transparent);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(34,197,94,0.2);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-icon{
+  font-size:32px;
+  filter:drop-shadow(0 0 10px var(--verde-claro));
+}
+
+.logo h1{
+  font-family:'Cinzel',serif;
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:2px;
+  background:linear-gradient(90deg,#86efac,var(--dourado));
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.user{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:14px;
+  color:#a7f3d0;
+}
+
+.user-avatar{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--verde-claro),#15803d);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  z-index:5;
+  text-align:center;
+  padding:80px 20px 40px;
+}
+
+.hero-badge{
+  display:inline-block;
+  padding:6px 16px;
+  background:rgba(250,204,21,0.15);
+  border:1px solid rgba(250,204,21,0.4);
+  border-radius:20px;
+  font-size:12px;
+  letter-spacing:2px;
+  color:var(--dourado);
+  margin-bottom:20px;
+  text-transform:uppercase;
+}
+
+.hero h2{
+  font-family:'Cinzel',serif;
+  font-size:clamp(36px,7vw,64px);
+  font-weight:700;
+  line-height:1.1;
+  margin-bottom:16px;
+  text-shadow:0 0 40px rgba(34,197,94,0.4);
+}
+
+.hero h2 span{
+  background:linear-gradient(90deg,#fde047,#fb923c,#fde047);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+  font-size:18px;
+  color:#bbf7d0;
+  max-width:600px;
+  margin:0 auto;
+  font-weight:300;
+}
+
+/* CONTAINER */
+.container{
+  position:relative;
+  z-index:5;
+  padding:40px 30px 80px;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.section-title{
+  font-family:'Cinzel',serif;
+  font-size:14px;
+  letter-spacing:4px;
+  color:var(--dourado);
+  text-transform:uppercase;
+  margin-bottom:20px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.section-title::before, .section-title::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(250,204,21,0.4),transparent);
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+  gap:24px;
+  margin-top:30px;
+}
+
+/* CARD */
+.card{
+  position:relative;
+  background:linear-gradient(160deg,rgba(20,83,45,0.4),rgba(2,6,23,0.6));
+  border:1px solid rgba(34,197,94,0.25);
+  border-radius:20px;
+  padding:30px 24px 24px;
+  cursor:pointer;
+  transition:all 0.4s cubic-bezier(.2,.8,.2,1);
+  backdrop-filter:blur(10px);
+  overflow:hidden;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:20px;
+  padding:1px;
+  background:linear-gradient(135deg,transparent,rgba(34,197,94,0.6),transparent);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  opacity:0;
+  transition:opacity 0.4s;
+}
+
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 60px -15px rgba(34,197,94,0.4);
+  border-color:rgba(34,197,94,0.5);
+}
+
+.card:hover::before{ opacity:1; }
+
+.card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:20px;
+}
+
+.card-emoji{
+  font-size:48px;
+  filter:drop-shadow(0 0 20px currentColor);
+  transition:transform 0.4s;
+}
+
+.card:hover .card-emoji{
+  transform:scale(1.15) rotate(-5deg);
+}
+
+.tag{
+  padding:5px 12px;
+  background:rgba(34,197,94,0.2);
+  border:1px solid rgba(34,197,94,0.4);
+  border-radius:20px;
+  font-size:11px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:#86efac;
+}
+
+.tag.medio{ background:rgba(250,204,21,0.15); border-color:rgba(250,204,21,0.4); color:var(--dourado); }
+.tag.dificil{ background:rgba(239,68,68,0.15); border-color:rgba(239,68,68,0.4); color:#fca5a5; }
+
+.card h3{
+  font-family:'Cinzel',serif;
+  font-size:24px;
+  font-weight:700;
+  margin-bottom:8px;
+  color:#f0fdf4;
+}
+
+.card p{
+  font-size:14px;
+  color:#86efac;
+  line-height:1.6;
+  margin-bottom:24px;
+  font-weight:300;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 22px;
+  background:linear-gradient(90deg,#16a34a,var(--verde-claro));
+  border-radius:12px;
+  font-weight:600;
+  font-size:14px;
+  letter-spacing:0.5px;
+  color:white;
+  transition:all 0.3s;
+  box-shadow:0 4px 20px -5px rgba(34,197,94,0.6);
+}
+
+.card:hover .btn{
+  background:linear-gradient(90deg,var(--verde-claro),#86efac);
+  transform:translateX(4px);
+}
+
+.btn::after{
+  content:"→";
+  transition:transform 0.3s;
+}
+
+.card:hover .btn::after{
+  transform:translateX(4px);
+}
+
+/* DESTAQUE */
+.destaque{
+  position:relative;
+  background:linear-gradient(135deg,rgba(220,38,38,0.25),rgba(249,115,22,0.15));
+  border:1px solid rgba(249,115,22,0.4);
+  border-radius:24px;
+  padding:32px;
+  margin-bottom:40px;
+  overflow:hidden;
+}
+
+.destaque::before{
+  content:"";
+  position:absolute;
+  top:-50%;
+  right:-20%;
+  width:400px;
+  height:400px;
+  background:radial-gradient(circle,rgba(249,115,22,0.3),transparent 70%);
+  animation:pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse{
+  0%,100%{ transform:scale(1); opacity:0.5; }
+  50%{ transform:scale(1.2); opacity:0.8; }
+}
+
+.destaque-content{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  gap:24px;
+  flex-wrap:wrap;
+}
+
+.destaque-emoji{
+  font-size:64px;
+  filter:drop-shadow(0 0 25px #fb923c);
+}
+
+.destaque-text h2{
+  font-family:'Cinzel',serif;
+  font-size:24px;
+  font-weight:700;
+  margin-bottom:6px;
+  color:#fed7aa;
+}
+
+.destaque-text p{
+  color:#fdba74;
+  font-size:14px;
+  font-weight:300;
+}
+
+/* FOOTER */
+footer{
+  position:relative;
+  z-index:5;
+  text-align:center;
+  padding:30px;
+  font-size:12px;
+  color:#86efac;
+  opacity:0.6;
+  letter-spacing:1px;
+  border-top:1px solid rgba(34,197,94,0.1);
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  header{ padding:20px; }
+  .logo h1{ font-size:18px; }
+  .hero{ padding:50px 20px 30px; }
+  .container{ padding:20px 16px 60px; }
+  .destaque{ padding:24px; }
+  .destaque-emoji{ font-size:48px; }
+}
+
+/* === OTIMIZACAO MOBILE === */
+@media (max-width: 900px), (pointer: coarse){
+  /* backdrop-filter custa muito em GPU mobile */
+  header, .card{ backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  /* drop-shadow nos icones forca recomposicao */
+  .logo-icon, .card-emoji, .destaque-emoji{ filter: none !important; }
+  /* sombras animadas reduzidas */
+  .destaque::before{ animation: none !important; }
+  .card{ transition: transform 0.2s !important; }
+  .card:hover{ box-shadow: 0 8px 24px -10px rgba(0,0,0,.4) !important; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- PARTÍCULAS -->
+<div class="particles" id="particles"></div>
+
+<header>
+  <div class="logo">
+    <span class="logo-icon">🌿</span>
+    <h1>AMAZÔNIA GAMES</h1>
+  </div>
+  <div class="user">
+    <div class="user-avatar">J</div>
+    <span>Jogador</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-badge">✦ Lendas do Folclore Brasileiro ✦</div>
+  <h2>Mergulhe nas <span>lendas da Amazônia</span></h2>
+  <p>Três jogos inspirados nas histórias que ecoam nas matas. Escolha sua lenda, controle seu destino.</p>
+</section>
+
+<div class="container">
+
+  <!-- DESTAQUE -->
+  <div class="destaque">
+    <div class="destaque-content">
+      <div class="destaque-emoji">🔥</div>
+      <div class="destaque-text">
+        <h2>Em destaque: Boitatá</h2>
+        <p>Atravesse a floresta como serpente de fogo. Devore inimigos e proteja a mata.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Escolha sua lenda</div>
+
+  <div class="grid">
+
+    <div class="card" onclick="ir('boitata')">
+      <div class="card-header">
+        <div class="card-emoji" style="color:#fb923c">🔥</div>
+        <span class="tag">Fácil</span>
+      </div>
+      <h3>Boitatá</h3>
+      <p>A serpente de fogo guardiã das matas. Devore, queime e sobreviva.</p>
+      <div class="btn">Jogar</div>
+    </div>
+
+    <div class="card" onclick="ir('saci')">
+      <div class="card-header">
+        <div class="card-emoji" style="color:#facc15">🌪️</div>
+        <span class="tag medio">Médio</span>
+      </div>
+      <h3>Saci</h3>
+      <p>O menino travesso de uma perna só. Use seus poderes para escapar do caçador.</p>
+      <div class="btn">Jogar</div>
+    </div>
+
+    <div class="card" onclick="ir('iara')">
+      <div class="card-header">
+        <div class="card-emoji" style="color:#22d3ee">🌊</div>
+        <span class="tag dificil">Difícil</span>
+      </div>
+      <h3>Iara</h3>
+      <p>A sereia das águas amazônicas. Resista ao seu canto no ritmo certo.</p>
+      <div class="btn">Jogar</div>
+    </div>
+
+    <div class="card" onclick="ir('boto')">
+      <div class="card-header">
+        <div class="card-emoji" style="color:#ec4899">🐬</div>
+        <span class="tag medio">Médio</span>
+      </div>
+      <h3>Boto cor-de-rosa</h3>
+      <p>Identifique o Boto disfarçado de homem entre os festeiros antes do amanhecer.</p>
+      <div class="btn">Jogar</div>
+    </div>
+
+    <div class="card" onclick="ir('caipora')">
+      <div class="card-header">
+        <div class="card-emoji" style="color:#22c55e">🌳</div>
+        <span class="tag dificil">Difícil</span>
+      </div>
+      <h3>Caipora</h3>
+      <p>Defenda os animais da floresta dos caçadores em 10 ondas. Tower defense.</p>
+      <div class="btn">Jogar</div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>FEITO COM 🌱 · INSPIRADO NAS LENDAS DA AMAZÔNIA</footer>
+
+<script>
+function ir(jogo){
+  document.body.style.transition = "opacity 0.3s";
+  document.body.style.opacity = "0";
+  setTimeout(()=>{ window.location.href = jogo + ".html"; }, 250);
+}
+
+// Partículas: folhas caindo (reduzidas em mobile para economizar bateria/CPU)
+const particles = document.getElementById("particles");
+const leaves = ["🍃","🌿","🍂"];
+const IS_MOBILE = window.matchMedia('(pointer: coarse), (max-width: 900px)').matches;
+const QTD_FOLHAS = IS_MOBILE ? 6 : 18;
+for(let i=0; i<QTD_FOLHAS; i++){
+  const leaf = document.createElement("div");
+  leaf.className = "leaf";
+  leaf.textContent = leaves[Math.floor(Math.random()*leaves.length)];
+  leaf.style.left = Math.random()*100 + "%";
+  leaf.style.animationDuration = (8 + Math.random()*10) + "s";
+  leaf.style.animationDelay = Math.random()*10 + "s";
+  leaf.style.fontSize = (12 + Math.random()*16) + "px";
+  particles.appendChild(leaf);
+}
+</script>
+
+</body>
+</html>
